@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Showcase-only** site for a friend's jewelry shop (Stefanini). Built with **Jekyll**, deployed to **GitHub Pages**. No e-commerce, no cart, no product catalog page, no blog. Originally started from the purchased "Mojuri" HTML template (index5 "Home Parallax" variant); all shop/blog/account UI has been removed.
 
 - Repo: `git@github.com:nsjewellery/stefanini-jewellery.git` (owner `nsjewellery`, repo `stefanini-jewellery`; the local folder is still named `stefani-jewerly` for historical reasons).
-- Deployed URL: `https://nsjewellery.github.io/stefanini-jewellery/` → `_config.yml` sets `baseurl: /stefanini-jewellery`.
+- Deployed URL: `https://stefanijewellery.com/` (custom domain — see root [CNAME](CNAME) file). Because it's served from the apex, `_config.yml` sets `baseurl: ""` (no path prefix).
 - Site language: English.
 
 ## Commands
@@ -15,10 +15,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Local dev
 ```bash
 bundle install           # first time, installs jekyll + webrick from Gemfile
-bundle exec jekyll serve # http://localhost:4000/stefanini-jewellery/
+bundle exec jekyll serve # http://localhost:4000/
 ```
 
-Local dev serves with the configured `baseurl`, so the local URL includes `/stefanini-jewellery/` too. To preview without the baseurl locally, run `bundle exec jekyll serve --baseurl ""`.
+Local dev serves at `http://localhost:4000/` (baseurl is empty in production via the custom-domain setup).
 
 ### Production build
 Handled by [.github/workflows/jekyll.yml](.github/workflows/jekyll.yml) on every push to `main` — runs `jekyll build` (baseurl comes from `_config.yml`, not CLI), then deploys via `actions/deploy-pages@v4`. No manual build needed.
