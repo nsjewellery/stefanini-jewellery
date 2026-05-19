@@ -2,7 +2,7 @@ title: Stefanini Jewellery
 description: Handcrafted jewellery — a family-run atelier.
 author: Stefanini Jewellery
 
-url: https://stefanijewellery.com
+url: https://stefaninijewellery.com
 baseurl: ""
 
 lang: en
@@ -13,6 +13,24 @@ exclude_from_localization: ["media", "assets", "libs", ".github", "CLAUDE.md", "
 
 plugins:
   - jekyll-multiple-languages-plugin
+  - jekyll-sitemap
+
+social:
+  instagram: "https://www.instagram.com/stefaninijewellery/"
+
+business:
+  name: "Stefanini Jewellery"
+  email: "info@stefaninijewellery.com"
+  summer_address:
+    street: "Promenade du Port, Via Aga Khan 1"
+    locality: "Porto Cervo"
+    region: "Sardegna"
+    postal_code: "07021"
+    country: "IT"
+  winter_address:
+    street: "Palace Hotel"
+    locality: "Gstaad"
+    country: "CH"
 
 exclude:
   - Gemfile

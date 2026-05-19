@@ -7,8 +7,80 @@
     {%- if page.i18n_key -%}{%- assign page_t = t[page.i18n_key] -%}{%- endif -%}
     {%- assign meta_title = page_t.meta_title | default: page.title -%}
     {%- assign meta_desc = page_t.meta_description | default: page.description | default: site.description -%}
-    <title>{% if meta_title %}{{ meta_title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+    {%- assign full_title = site.title -%}
+    {%- if meta_title -%}{%- assign full_title = meta_title | append: " | " | append: site.title -%}{%- endif -%}
+    <title>{{ full_title }}</title>
     {% if meta_desc %}<meta name="description" content="{{ meta_desc }}">{% endif %}
+
+    <!-- Canonical & hreflang -->
+    {%- assign page_path = page.url -%}
+    {%- assign en_url = site.url | append: baseurl_root | append: page_path -%}
+    {%- assign it_url = site.url | append: baseurl_root | append: "/it" | append: page_path -%}
+    {%- if active == default_lang -%}
+      {%- assign canonical_url = en_url -%}
+    {%- else -%}
+      {%- assign canonical_url = it_url -%}
+    {%- endif -%}
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="alternate" hreflang="en" href="{{ en_url }}">
+    <link rel="alternate" hreflang="it" href="{{ it_url }}">
+    <link rel="alternate" hreflang="x-default" href="{{ en_url }}">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ site.title }}">
+    <meta property="og:title" content="{{ full_title }}">
+    {% if meta_desc %}<meta property="og:description" content="{{ meta_desc }}">{% endif %}
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:locale" content="{% if active == 'it' %}it_IT{% else %}en_US{% endif %}">
+    <meta property="og:locale:alternate" content="{% if active == 'it' %}en_US{% else %}it_IT{% endif %}">
+    <meta property="og:image" content="{{ site.url }}{{ '/media/logo.png' | relative_url }}">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ full_title }}">
+    {% if meta_desc %}<meta name="twitter:description" content="{{ meta_desc }}">{% endif %}
+    <meta name="twitter:image" content="{{ site.url }}{{ '/media/logo.png' | relative_url }}">
+
+    <!-- JSON-LD: LocalBusiness -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "JewelryStore",
+      "name": "{{ site.title }}",
+      "description": "{{ site.description }}",
+      "url": "{{ site.url }}/",
+      "image": "{{ site.url }}{{ '/media/logo.png' | relative_url }}",
+      "email": "{{ site.business.email }}",
+      "sameAs": [
+        "{{ site.social.instagram }}"
+      ],
+      "location": [
+        {
+          "@type": "Place",
+          "name": "Stefanini Jewellery — Porto Cervo (Summer)",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "{{ site.business.summer_address.street }}",
+            "addressLocality": "{{ site.business.summer_address.locality }}",
+            "addressRegion": "{{ site.business.summer_address.region }}",
+            "postalCode": "{{ site.business.summer_address.postal_code }}",
+            "addressCountry": "{{ site.business.summer_address.country }}"
+          }
+        },
+        {
+          "@type": "Place",
+          "name": "Stefanini Jewellery — Gstaad (Winter)",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "{{ site.business.winter_address.street }}",
+            "addressLocality": "{{ site.business.winter_address.locality }}",
+            "addressCountry": "{{ site.business.winter_address.country }}"
+          }
+        }
+      ]
+    }
+    </script>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ '/media/favicon/favicon.ico' | relative_url }}">

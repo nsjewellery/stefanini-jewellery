@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Showcase-only** site for a friend's jewelry shop (Stefanini). Built with **Jekyll**, deployed to **GitHub Pages**. No e-commerce, no cart, no product catalog page, no blog. Originally started from the purchased "Mojuri" HTML template (index5 "Home Parallax" variant); all shop/blog/account UI has been removed.
 
 - Repo: `git@github.com:nsjewellery/stefanini-jewellery.git` (owner `nsjewellery`, repo `stefanini-jewellery`; the local folder is still named `stefani-jewerly` for historical reasons).
-- Deployed URL: `https://stefanijewellery.com/` (custom domain — see root [CNAME](CNAME) file). Because it's served from the apex, `_config.yml` sets `baseurl: ""` (no path prefix).
+- Deployed URL: `https://stefaninijewellery.com/` (custom domain — see root [CNAME](CNAME) file). Because it's served from the apex, `_config.yml` sets `baseurl: ""` (no path prefix).
 - Site language: English.
 
 ## Commands

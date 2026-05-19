@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: 'en' }}">
+<html lang="{{ site.lang | default: site.default_lang | default: 'en' }}">
 {%- include head.html -%}
 <body class="{{ page.body_class | default: 'page' }}">
     <div id="page" class="hfeed page-wrapper">
