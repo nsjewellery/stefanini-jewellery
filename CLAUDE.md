@@ -21,7 +21,7 @@ bundle exec jekyll serve # http://localhost:4000/stefanini-jewellery/
 Local dev serves with the configured `baseurl`, so the local URL includes `/stefanini-jewellery/` too. To preview without the baseurl locally, run `bundle exec jekyll serve --baseurl ""`.
 
 ### Production build
-Handled by [.github/workflows/jekyll.yml](.github/workflows/jekyll.yml) on every push to `main` — runs `jekyll build` with the baseurl auto-detected from the GitHub Pages environment, then deploys via `actions/deploy-pages@v4`. No manual build needed.
+Handled by [.github/workflows/jekyll.yml](.github/workflows/jekyll.yml) on every push to `main` — runs `jekyll build` (baseurl comes from `_config.yml`, not CLI), then deploys via `actions/deploy-pages@v4`. No manual build needed.
 
 ## Architecture
 
