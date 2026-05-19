@@ -2,7 +2,7 @@
 Language-aware variables for templates.
 
 The jekyll-multiple-languages-plugin does NOT rewrite site.baseurl per language
-in this setup — `relative_url` always prepends the root baseurl ("/stefanini-jewerly"),
+in this setup — `relative_url` always prepends the root baseurl ("/stefanini-jewellery"),
 so links built with `'/about.html' | relative_url` resolve to the English page
 even when rendering the Italian build. To produce per-language links, prepend
 `lang_base` (defined below) manually instead of using `relative_url`.
@@ -12,8 +12,8 @@ Vars exported:
   default_lang  — site default
   t             — site.data.i18n[active] translation tree
   other_lang    — the other language code
-  lang_base     — baseurl for current language pages (e.g. "/stefanini-jewerly"
-                  for EN, "/stefanini-jewerly/it" for IT). Build links as
+  lang_base     — baseurl for current language pages (e.g. "/stefanini-jewellery"
+                  for EN, "/stefanini-jewellery/it" for IT). Build links as
                   `{{ lang_base }}/about.html`, `{{ lang_base }}/` for home.
   other_url     — fully-qualified path to the home of the other language
                   (use directly as href — do NOT pipe through relative_url)
