@@ -18,6 +18,13 @@ plugins:
 social:
   instagram: "https://www.instagram.com/stefaninijewellery/"
 
+# Web3Forms — contact form provider. Replace the placeholder with the
+# access_key you receive by email after signing up at https://web3forms.com.
+# The key is safe to commit: it's a public client-side identifier, not a secret.
+# Spam protection (rate limiting, captcha, honeypot) lives on Web3Forms' side.
+web3forms:
+  access_key: "face5099-115b-4d24-a908-2c05393bf649"
+
 business:
   name: "Stefanini Jewellery"
   email: "info@stefaninijewellery.com"

@@ -69,39 +69,99 @@ i18n_key: contact
                     </div>
                     <div class="block-content">
                         {%- comment -%}
-                        To make this form actually send email, sign up at https://formspree.io
-                        (free tier) and replace the action below with your Formspree endpoint,
-                        e.g. action="https://formspree.io/f/yourFormId".
+                        Form provider: Web3Forms (https://web3forms.com).
+                        The access_key lives in _config.yml under web3forms.access_key.
+                        Submissions are sent as JSON to api.web3forms.com via fetch and
+                        relayed by email to the address registered on the Web3Forms account.
+                        Honeypot field "botcheck" filters bots; Web3Forms also applies
+                        server-side spam protection.
                         {%- endcomment -%}
-                        <form action="" method="post" class="contact-form" novalidate="novalidate">
+                        <form action="https://api.web3forms.com/submit" method="POST" class="contact-form" id="contact-form">
+                            <input type="hidden" name="access_key" value="{{ site.web3forms.access_key }}">
+                            <input type="hidden" name="subject" value="{{ page_t.form.subject }}">
+                            <input type="hidden" name="from_name" value="{{ site.title }}">
+                            <input type="hidden" name="replyto" value="email">
+                            <!-- Honeypot: hidden from humans, bots will fill it -->
+                            <input type="checkbox" name="botcheck" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+
                             <div class="contact-us-form">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6">
-                                        <label class="required">{{ page_t.form.name }}</label><br>
+                                        <label class="required" for="contact-name">{{ page_t.form.name }}</label><br>
                                         <span class="form-control-wrap">
-                                            <input type="text" name="name" value="" size="40" class="form-control" aria-required="true">
+                                            <input type="text" id="contact-name" name="name" value="" size="40" class="form-control" required aria-required="true">
                                         </span>
                                     </div>
                                     <div class="col-sm-12 col-md-6">
-                                        <label class="required">{{ page_t.form.email }}</label><br>
+                                        <label class="required" for="contact-email">{{ page_t.form.email }}</label><br>
                                         <span class="form-control-wrap">
-                                            <input type="email" name="email" value="" size="40" class="form-control" aria-required="true">
+                                            <input type="email" id="contact-email" name="email" value="" size="40" class="form-control" required aria-required="true">
                                         </span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <label class="required">{{ page_t.form.message }}</label><br>
+                                        <label class="required" for="contact-message">{{ page_t.form.message }}</label><br>
                                         <span class="form-control-wrap">
-                                            <textarea name="message" cols="40" rows="10" class="form-control" aria-required="true"></textarea>
+                                            <textarea id="contact-message" name="message" cols="40" rows="10" class="form-control" required aria-required="true"></textarea>
                                         </span>
                                     </div>
                                 </div>
                                 <div class="form-button">
-                                    <input type="submit" value="{{ page_t.form.submit }}" class="button">
+                                    <input type="submit" id="contact-submit" value="{{ page_t.form.submit }}" class="button">
                                 </div>
+                                <div id="contact-result" class="form-result m-t-20" role="status" aria-live="polite"></div>
                             </div>
                         </form>
+                        <script>
+                        (function () {
+                            var form = document.getElementById('contact-form');
+                            if (!form) return;
+                            var result = document.getElementById('contact-result');
+                            var submit = document.getElementById('contact-submit');
+                            var labels = {
+                                sending: {{ page_t.form.sending | jsonify }},
+                                success: {{ page_t.form.success | jsonify }},
+                                error:   {{ page_t.form.error   | jsonify }},
+                                submit:  {{ page_t.form.submit  | jsonify }}
+                            };
+                            form.addEventListener('submit', function (e) {
+                                e.preventDefault();
+                                if (!form.checkValidity()) { form.reportValidity(); return; }
+                                var data = new FormData(form);
+                                var payload = {};
+                                data.forEach(function (v, k) { payload[k] = v; });
+                                submit.disabled = true;
+                                submit.value = labels.sending;
+                                result.className = 'form-result is-visible m-t-20 text-muted';
+                                result.innerHTML = labels.sending;
+                                fetch('https://api.web3forms.com/submit', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                                    body: JSON.stringify(payload)
+                                })
+                                .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
+                                .then(function (res) {
+                                    if (res.ok && res.body && res.body.success) {
+                                        result.className = 'form-result is-visible m-t-20 text-success';
+                                        result.innerHTML = labels.success;
+                                        form.reset();
+                                    } else {
+                                        result.className = 'form-result is-visible m-t-20 text-danger';
+                                        result.innerHTML = labels.error;
+                                    }
+                                })
+                                .catch(function () {
+                                    result.className = 'form-result is-visible m-t-20 text-danger';
+                                    result.innerHTML = labels.error;
+                                })
+                                .then(function () {
+                                    submit.disabled = false;
+                                    submit.value = labels.submit;
+                                });
+                            });
+                        })();
+                        </script>
                     </div>
                 </div>
             </div>

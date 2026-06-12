@@ -70,3 +70,7 @@ contact:
     email: "Email"
     message: "Message"
     submit: "Submit"
+    sending: "Sending…"
+    success: "Thank you! Your message has been sent. We&rsquo;ll get back to you soon."
+    error: "Something went wrong. Please try again or write to us directly."
+    subject: "New contact from stefaninijewellery.com"

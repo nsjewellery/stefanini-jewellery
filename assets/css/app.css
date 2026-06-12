@@ -10571,3 +10571,12 @@ body.home.title-6 .block-newsletter .newsletter-title {
 #site-footer.three-columns .footer-bottom {
   margin-top: 0;
 }
+
+/* =========================================================
+   Project additions (Stefanini Jewellery — not in template)
+   ========================================================= */
+
+/* Contact form: Web3Forms integration */
+.contact-form .form-honeypot { display: none; }
+.contact-form .form-result { display: none; }
+.contact-form .form-result.is-visible { display: block; }

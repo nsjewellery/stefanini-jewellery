@@ -70,3 +70,7 @@ contact:
     email: "Email"
     message: "Messaggio"
     submit: "Invia"
+    sending: "Invio in corso…"
+    success: "Grazie! Il tuo messaggio &egrave; stato inviato. Ti risponderemo al pi&ugrave; presto."
+    error: "Si &egrave; verificato un errore. Riprova o scrivici direttamente via email."
+    subject: "Nuovo contatto da stefaninijewellery.com"
